@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     api.get('/repositories').then(response => {
-      setRepositories(response.data)
+      setRepositories(response.data);
     })
   }, []);
 
@@ -22,18 +22,16 @@ function App() {
 
     const repo = response.data;
 
-    setRepositories([...repositories, repo])
+    setRepositories([...repositories, repo]);
   }
 
   async function handleRemoveRepository(id) {
-  
-    await api.delete(`/repositories/${id}`).then(success => {
-      if(success) {
-         api.get('/repositories').then(response => {
-          setRepositories(response.data)
-        })
-      }
-    })
+
+    await api.delete(`/repositories/${id}`);
+
+    const newRepository = repositories.filter(repo => repo.id !== id)
+
+    setRepositories(newRepository);
   }
 
   return (
